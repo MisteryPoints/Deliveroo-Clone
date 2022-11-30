@@ -39,8 +39,8 @@ const HomeScreen = () => {
                     uri: 'https://links.papareact.com/wru',
                 }} />
                 <View className='flex-1'>
-                    <Text className='font-bold text-gray-400 text-xs'>Deliver Now!</Text>
-                    <Text className='font-bold text-xl'>Current Location
+                    <Text className='font-bold text-gray-400 text-xs'>Pedidos a Domicilio!</Text>
+                    <Text className='font-bold text-xl'>Ubicación Actual
                         <ChevronDownIcon size={20} color='#00CCBB' /> 
                     </Text>
                 </View> 
@@ -50,12 +50,14 @@ const HomeScreen = () => {
             <View className='flex-row items-center space-x-2 pb-2 mx-4'>
                 <View className='flex-row flex-1 space-x-2 bg-gray-200 p-3 rounded-2xl'>
                     <SearchIcon size={20} color='gray' />
-                    <TextInput placeholder='Restaurants and Cuisines' keyboardType='default' className='text-gray-500 text-sm w-[100%] '/>
+                    <TextInput placeholder='Restaurantes y Mercados' keyboardType='default' className='text-gray-500 text-sm w-[100%] '/>
                 </View>
                 <AdjustmentIcon size={35} color='#00CCBB'/>
             </View> 
             {/* Body */}
-            <ScrollView className='bg-gray-100' contentContainerStyle={{}}>
+            <ScrollView className='bg-gray-100' contentContainerStyle={{
+                paddingBottom: 100,
+            }}>
                 {/* Categories */}
                 <Categories/>
 
