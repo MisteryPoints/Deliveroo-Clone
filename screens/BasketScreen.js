@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectRestaurant } from '../extra/restaurantSlice';
-import { removeFromBasket, selectBasketItems } from '../extra/basketSlice';
+import { removeFromBasket, selectBasketItems, selectBasketTotal } from '../extra/basketSlice';
 import { XCircleIcon } from 'react-native-heroicons/solid';
 import { urlFor } from '../sanity';
 import Currency from 'react-currency-formatter';
@@ -12,6 +12,7 @@ const BasketScreen = () => {
     const navigation = useNavigation() 
     const restaurant = useSelector(selectRestaurant)
     const items = useSelector(selectBasketItems)
+    const basketTotal = useSelector(selectBasketTotal)
     const [groupedItemsBasket, setGroupedItemsBasket] = useState([])
     const dispatch = useDispatch()
 
@@ -22,9 +23,7 @@ const BasketScreen = () => {
         }, {})
 
         setGroupedItemsBasket(groupedItems)
-    }, [items])
-
-    console.log(groupedItemsBasket)
+    }, [items]) 
 
     return (
         <SafeAreaView className='flex-1 bg-white'>
@@ -58,15 +57,35 @@ const BasketScreen = () => {
                             </Text>
                             <TouchableOpacity>
                                 <Text className='text-[#00CCBB] text-xs' onPress={() => dispatch(removeFromBasket({ id: key }))}> 
-                                    Remove
+                                    Eliminar
                                 </Text>
                             </TouchableOpacity>
                         </View>
                     ))}
                 </ScrollView>
 
-                <View>
-                    
+                <View className='p-5 bg-white mt-5 space-y-4'>
+                    <View className='flex-row justify-between'>
+                        <Text className='text-gray-400'> Subtotal </Text>
+                        <Text className='text-gray-400'>
+                            <Currency quantity={basketTotal} currency='DOP' pattern="##,### !" />
+                        </Text>
+                    </View>
+                    <View className='flex-row justify-between'>
+                        <Text className='text-gray-400'> Gastos de Envío </Text>
+                        <Text className='text-gray-400'>
+                            <Currency quantity={150} currency='DOP' pattern="##,### !" />
+                        </Text>
+                    </View>
+                    <View className='flex-row justify-between'>
+                        <Text> Total a Pagar </Text>
+                        <Text className='font-extrabold'>
+                            <Currency quantity={basketTotal + 150} currency='DOP' pattern="##,### !" />
+                        </Text>
+                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('PreparingOrderScreen')} className='rounded-lg bg-[#00CCBB] p-4'>
+                        <Text className='text-center text-white text-lg font-bold'>Realizar Pedido</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
